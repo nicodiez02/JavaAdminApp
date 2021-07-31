@@ -5,21 +5,34 @@
  */
 package ventanas;
 
+import com.mysql.jdbc.Connection;
+import java.awt.Image;
+import java.awt.Toolkit;
+
+
 /**
  *
  * @author Nico
  */
 public class interfazPrincipal extends javax.swing.JFrame {
 
-    /**
-     * Creates new form interfazPrincipal
-     */
+
     public interfazPrincipal() {
         initComponents();
         setLocationRelativeTo(null);
         setResizable(false);
         setTitle("Interfaz de seleccion - ADMIN");
+        setSize(500,200);
+        setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/imagenes/administracion.png")));
     }
+    
+       @Override
+    public Image getIconImage() {
+        Image retValue = Toolkit.getDefaultToolkit().getImage(ClassLoader.getSystemResource("imagenes/icono_sinFondo2.png"));
+        return retValue;
+    }
+    
+   
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -127,6 +140,8 @@ public class interfazPrincipal extends javax.swing.JFrame {
 
     private void buttonInfoAActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonInfoAActionPerformed
         // TODO add your handling code here:
+        interfazInfoA ventanaInfoA = new interfazInfoA();
+        ventanaInfoA.setVisible(true);
         
     }//GEN-LAST:event_buttonInfoAActionPerformed
 
@@ -161,6 +176,7 @@ public class interfazPrincipal extends javax.swing.JFrame {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new interfazPrincipal().setVisible(true);
+                
             }
         });
     }
