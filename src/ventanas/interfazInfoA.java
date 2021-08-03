@@ -6,6 +6,7 @@
 package ventanas;
 
 import clases.Conexion;
+import clases.ConnectionPool;
 import java.awt.Toolkit;
 import java.sql.DriverManager;
 import java.sql.*;
@@ -39,10 +40,11 @@ public class interfazInfoA extends javax.swing.JFrame {
         if (value.equals("")) {
             JOptionPane.showMessageDialog(this, "Seleccione un campo");
         } else {
-
+              ConnectionPool metodospool = new ConnectionPool();
+                java.sql.Connection con = null;
             try {
-                Connection con = DriverManager.getConnection("jdbc:mysql://b1ewsttkrfq2qgsqjlls-mysql.services.clever-cloud.com/b1ewsttkrfq2qgsqjlls", "utsjuqhtdofjqifb", "iwdIyw16h64hG1A6E0Nr");
-                PreparedStatement delete = con.prepareStatement("DELETE FROM infoa WHERE id = '" + value + "'");
+                con = metodospool.dataSource.getConnection();
+                PreparedStatement delete = con.prepareStatement("DELETE FROM InformaticaA WHERE id = '" + value + "'");
 
                 delete.executeUpdate();
 
@@ -55,44 +57,41 @@ public class interfazInfoA extends javax.swing.JFrame {
     }
 
     public void Mostrar(String filtro, String parametro) {
-
+        ConnectionPool metodospool = new ConnectionPool();
+        java.sql.Connection con = null;
+        
         try {
 
             String codigosql;
             DefaultTableModel modelo = new DefaultTableModel();
-            Connection con = DriverManager.getConnection("jdbc:mysql://b1ewsttkrfq2qgsqjlls-mysql.services.clever-cloud.com/b1ewsttkrfq2qgsqjlls", "utsjuqhtdofjqifb", "iwdIyw16h64hG1A6E0Nr");
+            con = metodospool.dataSource.getConnection();
             jTableInfoA.setModel(modelo);
 
             PreparedStatement pst = null;
             ResultSet rs = null;
 
-            if (parametro.equals("R")) {
-                
-                codigosql = "SELECT ID, Nombre, Apellido, Reporte, PC, Reporte2, Año, Laboratorio FROM infoa WHERE Reporte2 LIKE '%" + filtro + "%'";
-                
-            } else if (parametro.equals("ID")) {
-                
-                codigosql = "SELECT ID, Nombre, Apellido, Reporte, PC, Reporte2, Año, Laboratorio FROM infoa WHERE ID LIKE '%" + filtro + "%'";
-                
-            } else if (parametro.equals("N")) {
-                
-                codigosql = "SELECT ID, Nombre, Apellido, Reporte, PC, Reporte2, Año, Laboratorio FROM infoa WHERE Nombre LIKE '%" + filtro + "%'";
-                
-            } else if (parametro.equals("A")) {
-                
-                codigosql = "SELECT ID, Nombre, Apellido, Reporte, PC, Reporte2, Año, Laboratorio FROM infoa WHERE Apellido LIKE '%" + filtro + "%'";
-                
-        
-            }else if (parametro.equals("P")) {
-                
-                codigosql = "SELECT ID, Nombre, Apellido, Reporte, PC, Reporte2, Año, Laboratorio FROM infoa WHERE PC LIKE '%" + filtro + "%'";
-                
-            }else if (parametro.equals("L")) {
-                
-                codigosql = "SELECT ID, Nombre, Apellido, Reporte, PC, Reporte2, Año, Laboratorio FROM infoa WHERE Laboratorio LIKE '%" + filtro + "%'";
-                
-            }else {
-                codigosql = "SELECT ID, Nombre, Apellido, Reporte, PC, Reporte2, Año, Laboratorio FROM infoa";
+            switch (parametro) {
+                case "R":
+                    codigosql = "SELECT ID, Nombre, Apellido, Reporte, PC, Reporte2, Año, Laboratorio FROM InformaticaA WHERE Reporte2 LIKE '%" + filtro + "%'";
+                    break;
+                case "ID":
+                    codigosql = "SELECT ID, Nombre, Apellido, Reporte, PC, Reporte2, Año, Laboratorio FROM InformaticaA WHERE ID LIKE '%" + filtro + "%'";
+                    break;
+                case "N":
+                    codigosql = "SELECT ID, Nombre, Apellido, Reporte, PC, Reporte2, Año, Laboratorio FROM InformaticaA WHERE Nombre LIKE '%" + filtro + "%'";
+                    break;
+                case "A":
+                    codigosql = "SELECT ID, Nombre, Apellido, Reporte, PC, Reporte2, Año, Laboratorio FROM InformaticaA WHERE Apellido LIKE '%" + filtro + "%'";
+                    break;
+                case "P":
+                    codigosql = "SELECT ID, Nombre, Apellido, Reporte, PC, Reporte2, Año, Laboratorio FROM InformaticaA WHERE PC LIKE '%" + filtro + "%'";
+                    break;
+                case "L":
+                    codigosql = "SELECT ID, Nombre, Apellido, Reporte, PC, Reporte2, Año, Laboratorio FROM InformaticaA WHERE Laboratorio LIKE '%" + filtro + "%'";
+                    break;
+                default:
+                    codigosql = "SELECT ID, Nombre, Apellido, Reporte, PC, Reporte2, Año, Laboratorio FROM InformaticaA";
+                    break;
             }
 
             pst = con.prepareStatement(codigosql);
@@ -111,6 +110,7 @@ public class interfazInfoA extends javax.swing.JFrame {
             modelo.addColumn("Reporte2");
             modelo.addColumn("Año");
             modelo.addColumn("Laboratorio");
+             modelo.addColumn("Comentario");
 
             while (rs.next()) { //Recorre los datos de la consulta, proporciona los datos de 1 fila por cada ciclo
 
