@@ -14,10 +14,10 @@ import java.awt.Toolkit;
  *
  * @author Nico
  */
-public class interfazPrincipal extends javax.swing.JFrame {
+public class PrincipalInterface extends javax.swing.JFrame {
 
 
-    public interfazPrincipal() {
+    public PrincipalInterface() {
         initComponents();
         setLocationRelativeTo(null);
         setResizable(false);
@@ -48,18 +48,12 @@ public class interfazPrincipal extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         buttonAdoA = new javax.swing.JButton();
         labelInfoA = new javax.swing.JLabel();
-        buttonInfoA = new javax.swing.JButton();
+        buttonReportes = new javax.swing.JButton();
         labelInfoB = new javax.swing.JLabel();
         buttonInfoB = new javax.swing.JButton();
         labelAdoA = new javax.swing.JLabel();
         buttonAdoB = new javax.swing.JButton();
         labelAdoB = new javax.swing.JLabel();
-        buttonMulti = new javax.swing.JButton();
-        labelQuimica = new javax.swing.JLabel();
-        buttonQuimica1 = new javax.swing.JButton();
-        buttonElectro = new javax.swing.JButton();
-        labelElectronica = new javax.swing.JLabel();
-        labelMulti = new javax.swing.JLabel();
         wallpaper = new javax.swing.JLabel();
 
         jRadioButton1.setText("jRadioButton1");
@@ -77,60 +71,42 @@ public class interfazPrincipal extends javax.swing.JFrame {
 
         buttonAdoA.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/estrategia.png"))); // NOI18N
         buttonAdoA.setPreferredSize(new java.awt.Dimension(100, 70));
-        getContentPane().add(buttonAdoA, new org.netbeans.lib.awtextra.AbsoluteConstraints(269, 86, 64, 64));
+        getContentPane().add(buttonAdoA, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 120, 64, 64));
 
         labelInfoA.setFont(new java.awt.Font("Arial", 1, 11)); // NOI18N
-        labelInfoA.setText("Informatica A");
-        getContentPane().add(labelInfoA, new org.netbeans.lib.awtextra.AbsoluteConstraints(37, 156, -1, -1));
+        labelInfoA.setText("Problemas");
+        getContentPane().add(labelInfoA, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 190, -1, -1));
 
-        buttonInfoA.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/informatica.png"))); // NOI18N
-        buttonInfoA.addActionListener(new java.awt.event.ActionListener() {
+        buttonReportes.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/informatica.png"))); // NOI18N
+        buttonReportes.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                buttonInfoAActionPerformed(evt);
+                buttonReportesActionPerformed(evt);
             }
         });
-        getContentPane().add(buttonInfoA, new org.netbeans.lib.awtextra.AbsoluteConstraints(37, 86, 64, 64));
+        getContentPane().add(buttonReportes, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 120, 64, 64));
 
         labelInfoB.setFont(new java.awt.Font("Arial", 1, 11)); // NOI18N
-        labelInfoB.setText("Informatica B");
-        getContentPane().add(labelInfoB, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 156, -1, -1));
+        labelInfoB.setText("Usuarios");
+        getContentPane().add(labelInfoB, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 190, -1, -1));
 
         buttonInfoB.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/informatica.png"))); // NOI18N
-        getContentPane().add(buttonInfoB, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 86, 64, 64));
+        buttonInfoB.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttonInfoBActionPerformed(evt);
+            }
+        });
+        getContentPane().add(buttonInfoB, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 120, 64, 64));
 
         labelAdoA.setFont(new java.awt.Font("Arial", 1, 11)); // NOI18N
-        labelAdoA.setText("Ado A");
-        getContentPane().add(labelAdoA, new org.netbeans.lib.awtextra.AbsoluteConstraints(279, 156, -1, -1));
+        labelAdoA.setText("Laboratorios");
+        getContentPane().add(labelAdoA, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 190, -1, -1));
 
         buttonAdoB.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/estrategia.png"))); // NOI18N
-        getContentPane().add(buttonAdoB, new org.netbeans.lib.awtextra.AbsoluteConstraints(364, 86, 64, 64));
+        getContentPane().add(buttonAdoB, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 120, 64, 64));
 
         labelAdoB.setFont(new java.awt.Font("Arial", 1, 11)); // NOI18N
-        labelAdoB.setText("Ado B");
-        getContentPane().add(labelAdoB, new org.netbeans.lib.awtextra.AbsoluteConstraints(374, 156, -1, -1));
-
-        buttonMulti.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/claqueta.png"))); // NOI18N
-        getContentPane().add(buttonMulti, new org.netbeans.lib.awtextra.AbsoluteConstraints(314, 196, 64, 64));
-
-        labelQuimica.setFont(new java.awt.Font("Arial", 1, 11)); // NOI18N
-        labelQuimica.setText("Quimica");
-        labelQuimica.setToolTipText("");
-        labelQuimica.setVerticalAlignment(javax.swing.SwingConstants.BOTTOM);
-        getContentPane().add(labelQuimica, new org.netbeans.lib.awtextra.AbsoluteConstraints(93, 271, -1, -1));
-
-        buttonQuimica1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/quimica.png"))); // NOI18N
-        getContentPane().add(buttonQuimica1, new org.netbeans.lib.awtextra.AbsoluteConstraints(83, 196, 64, 64));
-
-        buttonElectro.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/circuito.png"))); // NOI18N
-        getContentPane().add(buttonElectro, new org.netbeans.lib.awtextra.AbsoluteConstraints(201, 196, 64, 64));
-
-        labelElectronica.setFont(new java.awt.Font("Arial", 1, 11)); // NOI18N
-        labelElectronica.setText("Electronica");
-        getContentPane().add(labelElectronica, new org.netbeans.lib.awtextra.AbsoluteConstraints(205, 271, -1, -1));
-
-        labelMulti.setFont(new java.awt.Font("Arial", 1, 11)); // NOI18N
-        labelMulti.setText("Multimedios");
-        getContentPane().add(labelMulti, new org.netbeans.lib.awtextra.AbsoluteConstraints(314, 271, -1, -1));
+        labelAdoB.setText("Cursos");
+        getContentPane().add(labelAdoB, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 190, -1, -1));
 
         wallpaper.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/icono_sinFondo2.png"))); // NOI18N
         getContentPane().add(wallpaper, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 30, -1, 270));
@@ -138,12 +114,17 @@ public class interfazPrincipal extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void buttonInfoAActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonInfoAActionPerformed
+    private void buttonReportesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonReportesActionPerformed
         // TODO add your handling code here:
-        interfazInfoA ventanaInfoA = new interfazInfoA();
+        Reportes ventanaInfoA = new Reportes();
         ventanaInfoA.setVisible(true);
         
-    }//GEN-LAST:event_buttonInfoAActionPerformed
+    }//GEN-LAST:event_buttonReportesActionPerformed
+
+    private void buttonInfoBActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonInfoBActionPerformed
+        // TODO add your handling code here:
+    
+    }//GEN-LAST:event_buttonInfoBActionPerformed
 
     /**
      * @param args the command line arguments
@@ -162,20 +143,21 @@ public class interfazPrincipal extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(interfazPrincipal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(PrincipalInterface.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(interfazPrincipal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(PrincipalInterface.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(interfazPrincipal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(PrincipalInterface.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(interfazPrincipal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(PrincipalInterface.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new interfazPrincipal().setVisible(true);
+                new PrincipalInterface().setVisible(true);
                 
             }
         });
@@ -184,21 +166,15 @@ public class interfazPrincipal extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton buttonAdoA;
     private javax.swing.JButton buttonAdoB;
-    private javax.swing.JButton buttonElectro;
-    private javax.swing.JButton buttonInfoA;
     private javax.swing.JButton buttonInfoB;
-    private javax.swing.JButton buttonMulti;
-    private javax.swing.JButton buttonQuimica1;
     private javax.swing.JButton buttonQuimica2;
+    private javax.swing.JButton buttonReportes;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JRadioButton jRadioButton1;
     private javax.swing.JLabel labelAdoA;
     private javax.swing.JLabel labelAdoB;
-    private javax.swing.JLabel labelElectronica;
     private javax.swing.JLabel labelInfoA;
     private javax.swing.JLabel labelInfoB;
-    private javax.swing.JLabel labelMulti;
-    private javax.swing.JLabel labelQuimica;
     private javax.swing.JLabel wallpaper;
     // End of variables declaration//GEN-END:variables
 }

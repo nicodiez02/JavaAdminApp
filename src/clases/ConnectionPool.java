@@ -11,10 +11,9 @@ import javax.sql.DataSource;
 public class ConnectionPool {
     
     public DataSource dataSource;
-    public final String DB = "sql10429079";
-    public final String URL = "jdbc:mysql://sql10.freesqldatabase.com:3306/" + DB;
-    public final String USER = "sql10429079";
-    public final String PASS = "gADpf7X9wA";
+    public final String URL = "jdbc:mysql://168.138.132.101:3306/AR_A213_SQL_S67";
+    public final String USER = "AR_A213_SQL_S67";
+    public final String PASS = "Hola1559200286";
 
     private void inicializarDataSource() {
 
@@ -24,6 +23,7 @@ public class ConnectionPool {
         basicDataSource.setUsername(USER);
         basicDataSource.setPassword(PASS);
         basicDataSource.setUrl(URL);
+        basicDataSource.setInitialSize(50);
         
         
         dataSource = basicDataSource;
