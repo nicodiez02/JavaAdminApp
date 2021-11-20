@@ -22,7 +22,7 @@ public class PrincipalInterface extends javax.swing.JFrame {
         setLocationRelativeTo(null);
         setResizable(false);
         setTitle("Interfaz de seleccion - ADMIN");
-        setSize(500,200);
+        setSize(500, 320);
         setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/imagenes/administracion.png")));
     }
     
@@ -46,15 +46,8 @@ public class PrincipalInterface extends javax.swing.JFrame {
         jRadioButton1 = new javax.swing.JRadioButton();
         buttonQuimica2 = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
-        buttonAdoA = new javax.swing.JButton();
-        labelInfoA = new javax.swing.JLabel();
         buttonReportes = new javax.swing.JButton();
-        labelInfoB = new javax.swing.JLabel();
-        buttonInfoB = new javax.swing.JButton();
-        labelAdoA = new javax.swing.JLabel();
-        buttonAdoB = new javax.swing.JButton();
-        labelAdoB = new javax.swing.JLabel();
-        wallpaper = new javax.swing.JLabel();
+        jPanel1 = new javax.swing.JPanel();
 
         jRadioButton1.setText("jRadioButton1");
 
@@ -62,54 +55,25 @@ public class PrincipalInterface extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMinimumSize(new java.awt.Dimension(430, 430));
-        setPreferredSize(new java.awt.Dimension(430, 430));
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jLabel1.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
-        jLabel1.setText("Seleccione el curso del cual desea ver la informacion");
-        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(37, 27, -1, -1));
+        jLabel1.setBackground(new java.awt.Color(255, 255, 255));
+        jLabel1.setFont(new java.awt.Font("Roboto", 1, 24)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel1.setText("BIENVENIDO");
+        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 30, -1, -1));
 
-        buttonAdoA.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/estrategia.png"))); // NOI18N
-        buttonAdoA.setPreferredSize(new java.awt.Dimension(100, 70));
-        getContentPane().add(buttonAdoA, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 120, 64, 64));
-
-        labelInfoA.setFont(new java.awt.Font("Arial", 1, 11)); // NOI18N
-        labelInfoA.setText("Problemas");
-        getContentPane().add(labelInfoA, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 190, -1, -1));
-
-        buttonReportes.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/informatica.png"))); // NOI18N
+        buttonReportes.setBackground(new java.awt.Color(255, 255, 255));
+        buttonReportes.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/entrar3.png"))); // NOI18N
         buttonReportes.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 buttonReportesActionPerformed(evt);
             }
         });
-        getContentPane().add(buttonReportes, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 120, 64, 64));
+        getContentPane().add(buttonReportes, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 70, 210, 190));
 
-        labelInfoB.setFont(new java.awt.Font("Arial", 1, 11)); // NOI18N
-        labelInfoB.setText("Usuarios");
-        getContentPane().add(labelInfoB, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 190, -1, -1));
-
-        buttonInfoB.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/informatica.png"))); // NOI18N
-        buttonInfoB.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                buttonInfoBActionPerformed(evt);
-            }
-        });
-        getContentPane().add(buttonInfoB, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 120, 64, 64));
-
-        labelAdoA.setFont(new java.awt.Font("Arial", 1, 11)); // NOI18N
-        labelAdoA.setText("Laboratorios");
-        getContentPane().add(labelAdoA, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 190, -1, -1));
-
-        buttonAdoB.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/estrategia.png"))); // NOI18N
-        getContentPane().add(buttonAdoB, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 120, 64, 64));
-
-        labelAdoB.setFont(new java.awt.Font("Arial", 1, 11)); // NOI18N
-        labelAdoB.setText("Cursos");
-        getContentPane().add(labelAdoB, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 190, -1, -1));
-
-        wallpaper.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/icono_sinFondo2.png"))); // NOI18N
-        getContentPane().add(wallpaper, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 30, -1, 270));
+        jPanel1.setBackground(new java.awt.Color(166, 212, 242));
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(-10, 0, 500, 450));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -120,11 +84,6 @@ public class PrincipalInterface extends javax.swing.JFrame {
         ventanaInfoA.setVisible(true);
         
     }//GEN-LAST:event_buttonReportesActionPerformed
-
-    private void buttonInfoBActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonInfoBActionPerformed
-        // TODO add your handling code here:
-    
-    }//GEN-LAST:event_buttonInfoBActionPerformed
 
     /**
      * @param args the command line arguments
@@ -164,17 +123,10 @@ public class PrincipalInterface extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton buttonAdoA;
-    private javax.swing.JButton buttonAdoB;
-    private javax.swing.JButton buttonInfoB;
     private javax.swing.JButton buttonQuimica2;
     private javax.swing.JButton buttonReportes;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JRadioButton jRadioButton1;
-    private javax.swing.JLabel labelAdoA;
-    private javax.swing.JLabel labelAdoB;
-    private javax.swing.JLabel labelInfoA;
-    private javax.swing.JLabel labelInfoB;
-    private javax.swing.JLabel wallpaper;
     // End of variables declaration//GEN-END:variables
 }

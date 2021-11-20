@@ -20,9 +20,9 @@ public class Colores extends DefaultTableCellRenderer {
 
         super.getTableCellRendererComponent(table,value,Selected,hasFocus,row,col);
         
-        
         if(table.getValueAt(row, 10).toString().equals("Si")){
-             setBackground(new Color(168, 240, 161));
+          setBackground(new Color(168, 240, 161));
+                     
         }else{
              setBackground(new Color(255,108,108)); 
         }
