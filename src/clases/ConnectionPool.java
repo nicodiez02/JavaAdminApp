@@ -16,9 +16,9 @@ public class ConnectionPool {
     private static ConnectionPool dataSource;
     private BasicDataSource basicDataSource = null;
 
-    public final String URL = "jdbc:mysql://168.138.132.101:3306/AR_A213_SQL_S67";
-    public final String USER = "AR_A213_SQL_S67";
-    public final String PASS = "Hola1559200286";
+    private final String URL = "jdbc:mysql://168.138.132.101:3306/AR_A213_SQL_S67";
+    private final String USER = "AR_A213_SQL_S67";
+    private final String PASS = "Hola1559200286";
 
     private ConnectionPool() {
 
