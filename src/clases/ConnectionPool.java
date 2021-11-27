@@ -5,31 +5,51 @@
  */
 package clases;
 
+import com.mysql.jdbc.Connection;
+import com.mysql.jdbc.PreparedStatement;
 import org.apache.commons.dbcp2.BasicDataSource;
 import javax.sql.DataSource;
+import java.sql.*;
 
 public class ConnectionPool {
-    
-    public DataSource dataSource;
+
+    private static ConnectionPool dataSource;
+    private BasicDataSource basicDataSource = null;
+
     public final String URL = "jdbc:mysql://168.138.132.101:3306/AR_A213_SQL_S67";
     public final String USER = "AR_A213_SQL_S67";
     public final String PASS = "Hola1559200286";
 
-    private void inicializarDataSource() {
+    private ConnectionPool() {
 
-        BasicDataSource basicDataSource = new BasicDataSource();
-        
-        basicDataSource.setDriverClassName("org.gjt.mm.mysql.Driver");
+        basicDataSource = new BasicDataSource();
+        basicDataSource.setDriverClassName("com.mysql.cj.jdbc.Driver");
         basicDataSource.setUsername(USER);
         basicDataSource.setPassword(PASS);
         basicDataSource.setUrl(URL);
-        basicDataSource.setInitialSize(50);
-        
-        
-        dataSource = basicDataSource;
+
+        basicDataSource.setMinIdle(5);
+        basicDataSource.setMaxIdle(20);
+        basicDataSource.setMaxTotal(50);
+        basicDataSource.setMaxWaitMillis(-1);
+
     }
 
-    public ConnectionPool(){
-        inicializarDataSource();
+    public static ConnectionPool getInstance() {
+        if (dataSource == null) {
+            dataSource = new ConnectionPool();
+            return dataSource;
+        } else {
+            return dataSource;
+        }
     }
+
+    public java.sql.Connection getConnection() throws SQLException {
+        return this.basicDataSource.getConnection();
+    }
+
+    public void closeConnection(java.sql.Connection connection) throws SQLException {
+        connection.close();
+    }
+    
 }

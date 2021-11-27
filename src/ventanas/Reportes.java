@@ -56,8 +56,7 @@ public class Reportes extends javax.swing.JFrame {
         jDateChooser1.setLocale(new Locale("es"));
         jDateChooser1.setDateFormatString("yyyy-MM-dd");
 
-        Mostrar();
-        setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/imagenes/administracion.png")));
+        Mostrar(0);
 
         jLabelSol.setForeground(Color.BLACK);
 
@@ -71,6 +70,7 @@ public class Reportes extends javax.swing.JFrame {
         jTextFieldFastNombre.setEnabled(false);
         jTextFieldFastApellido.setEnabled(false);
         jDateChooser1.setEnabled(false);
+        jButtonFiltrar.setEnabled(false);
 
         jLabelLab.setForeground(new Color(196, 204, 204));
         jLabelCurso.setForeground(new Color(196, 204, 204));
@@ -120,15 +120,17 @@ public class Reportes extends javax.swing.JFrame {
         if (value.equals("")) {
             JOptionPane.showMessageDialog(this, "Seleccione un campo");
         } else {
-            ConnectionPool metodospool = new ConnectionPool();
-            java.sql.Connection con = null;
             try {
-                con = metodospool.dataSource.getConnection();
-                PreparedStatement delete = con.prepareStatement("DELETE FROM reportes WHERE ID = '" + value + "'");
+                Connection c = ConnectionPool.getInstance().getConnection();
+                if (c != null) {
 
-                delete.executeUpdate();
+                    PreparedStatement delete = c.prepareStatement("DELETE FROM reportes WHERE ID = '" + value + "'");
+                    delete.executeUpdate();
 
-                Mostrar();
+                    Mostrar(0);
+                } else {
+                    System.out.println("No s epudo conectar");
+                }
             } catch (Exception e) {
                 JOptionPane.showMessageDialog(this, "Hubo un error al procesar la operacion, contacte con el administrador");
                 System.out.println("El error es: " + e);
@@ -186,20 +188,17 @@ public class Reportes extends javax.swing.JFrame {
 
     }
 
-    public void Mostrar() {
-
-        ConnectionPool metodospool = new ConnectionPool();
-        java.sql.Connection con = null;
+    public void Mostrar(int seleccion) {
 
         try {
-            String codigosql = "";
+            Connection c = ConnectionPool.getInstance().getConnection();
+
             DefaultTableModel modelo = new DefaultTableModel() {
                 @Override
                 public boolean isCellEditable(int rowIndex, int colIndex) {
                     return false;
                 }
             };
-            con = metodospool.dataSource.getConnection();
             jTable.setModel(modelo);
             jTable.setAutoCreateRowSorter(true);
             sorter = new TableRowSorter<>(modelo);
@@ -264,45 +263,91 @@ public class Reportes extends javax.swing.JFrame {
             columnaCategoria.setMaxWidth(140);
             columnaCategoria.setMinWidth(140);
 
+            String codigosql = "";
+
             PreparedStatement pst = null;
             ResultSet rs = null;
+            if (seleccion == 4) {
+             
+                String value1 = jTextFieldFastNombre.getText().trim();
+                String value2 = jTextFieldFastApellido.getText().trim();
 
-            codigosql = "SELECT ID, Aula, Categoria, CategoriaExtra, Comentario, Nombre, Apellido, curso_name, PC, Fecha, Solucionado\n"
-                    + "FROM reportes \n"
-                    + "JOIN cursos \n"
-                    + "ON CursoID = id_curso\n"
-                    + "JOIN laboratorios \n"
-                    + "ON Lab_ID = id_Lab;";
+                codigosql = "	 SELECT ID, Aula, Categoria, CategoriaExtra, Comentario, Nombre, Apellido, curso_name, PC, Fecha, Solucionado\n"
+                        + "                         FROM reportes\n"
+                        + "                         JOIN cursos\n"
+                        + "                         ON CursoID = id_curso\n"
+                        + "                         JOIN laboratorios\n"
+                        + "                         ON Lab_ID = id_Lab\n"
+                        + "                         WHERE Nombre = '" + value1 + "' AND \n"
+                        + "                         Apellido = '" + value2 + "'";
 
-            pst = con.prepareStatement(codigosql);
+            } else if (seleccion == 6) {
+                
+                String fecha;
+                java.util.Date date = new java.util.Date();
+                SimpleDateFormat f = new SimpleDateFormat("yyyy-MM-dd");
 
-            rs = pst.executeQuery();
+                fecha = f.format(jDateChooser1.getDate());
+                
+                System.out.println(fecha);
+                
+                  codigosql = "	 SELECT ID, Aula, Categoria, CategoriaExtra, Comentario, Nombre, Apellido, curso_name, PC, Fecha, Solucionado\n"
+                        + "                         FROM reportes\n"
+                        + "                         JOIN cursos\n"
+                        + "                         ON CursoID = id_curso\n"
+                        + "                         JOIN laboratorios\n"
+                        + "                         ON Lab_ID = id_Lab\n"
+                        + "                         WHERE Fecha LIKE '%" + fecha + "%'";
+                   
+            } else {
+                codigosql = "SELECT ID, Aula, Categoria, CategoriaExtra, Comentario, Nombre, Apellido, curso_name, PC, Fecha, Solucionado\n"
+                        + "FROM reportes \n"
+                        + "JOIN cursos \n"
+                        + "ON CursoID = id_curso\n"
+                        + "JOIN laboratorios \n"
+                        + "ON Lab_ID = id_Lab;";
 
-            ResultSetMetaData rsMD = rs.getMetaData(); // Pasar resultado de la consulta al obj rs 
-
-            int cantidadColumnas = rsMD.getColumnCount();
-
-            while (rs.next()) { //Recorre los datos de la consulta, proporciona los datos de 1 fila por cada ciclo
-
-                Object[] filas = new Object[cantidadColumnas]; //Objetos que va a almacenar los registros de la bd
-
-                for (int i = 0; i < cantidadColumnas; i++) { //Pasa los datos al objeto
-                    filas[i] = rs.getObject(i + 1); //Le asignamos a cada fila (objeto) lo que recopilo el metodo rs
-                }
-
-                modelo.addRow(filas); //Agregamos tantas filas como datos hayan sido recopilados
             }
 
-            modelo.addTableModelListener(jTable);
+       
+            
+            pst = c.prepareStatement(codigosql);
 
+            rs = pst.executeQuery();
+            
+            while(rs.next()){
+                ResultSetMetaData rsMD = rs.getMetaData(); // Pasar resultado de la consulta al obj rs 
+
+                int cantidadColumnas = rsMD.getColumnCount();
+
+                while (rs.next()) { //Recorre los datos de la consulta, proporciona los datos de 1 fila por cada ciclo
+
+                    Object[] filas = new Object[cantidadColumnas]; //Objetos que va a almacenar los registros de la bd
+
+                    for (int i = 0; i < cantidadColumnas; i++) { //Pasa los datos al objeto
+                        filas[i] = rs.getObject(i + 1); //Le asignamos a cada fila (objeto) lo que recopilo el metodo rs
+                    }
+                    
+
+                    modelo.addRow(filas); //Agregamos tantas filas como datos hayan sido recopilados
+                }
+                
+              
+                
+                modelo.addTableModelListener(jTable);
+                
+            }
+           
         } catch (SQLException e) {
             System.out.println("El error es: " + e);
-            Mostrar();
+            Mostrar(0);
             JOptionPane.showMessageDialog(this, "Hubo un error al procesar los datos, contacte con el administrador");
         }
 
     }
 
+    
+    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -717,7 +762,7 @@ public class Reportes extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-
+    
     private void jButtonEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEliminarActionPerformed
         // TODO add your handling code here:
         Eliminar();
@@ -734,6 +779,7 @@ public class Reportes extends javax.swing.JFrame {
             case 4:
                 jTextFieldFastApellido.setEnabled(true);
                 jTextFieldFastNombre.setEnabled(true);
+                jButtonFiltrar.setEnabled(true);
 
                 jTextFielfFiltro.setEnabled(false);
                 jDateChooser1.setEnabled(false);
@@ -747,6 +793,7 @@ public class Reportes extends javax.swing.JFrame {
 
                 jTextFieldFastApellido.setEnabled(false);
                 jTextFieldFastNombre.setEnabled(false);
+                jButtonFiltrar.setEnabled(true);
 
                 jLabelFastSurname.setForeground(new Color(196, 204, 204));
                 jLabelFastName1.setForeground(new Color(196, 204, 204));
@@ -758,6 +805,7 @@ public class Reportes extends javax.swing.JFrame {
                 jDateChooser1.setEnabled(false);
                 jTextFieldFastNombre.setEnabled(false);
                 jTextFieldFastApellido.setEnabled(false);
+                jButtonFiltrar.setEnabled(false);
                 jLabelFastSurname.setForeground(new Color(196, 204, 204));
                 jLabelFastName1.setForeground(new Color(196, 204, 204));
 
@@ -775,7 +823,7 @@ public class Reportes extends javax.swing.JFrame {
         String valueText2 = jTextFieldFastApellido.getText();
 
         if (valueText.isEmpty() && valueText2.isEmpty()) {
-            Mostrar();
+            Mostrar(0);
         }
     }//GEN-LAST:event_jTextFieldFastNombreKeyReleased
 
@@ -813,13 +861,10 @@ public class Reportes extends javax.swing.JFrame {
             if (solucionado.equals("Si") || solucionado.equals("sI") || solucionado.equals("SI") || solucionado.equals("si")
                     || solucionado.equals("no") || solucionado.equals("NO") || solucionado.equals("nO") || solucionado.equals("No")) {
 
-                ConnectionPool metodospool = new ConnectionPool();
-                java.sql.Connection con = null;
-
                 try {
+                    Connection c = ConnectionPool.getInstance().getConnection();
                     int id = (int) tableModel.getValueAt(jTable.getSelectedRow(), 0);
 
-                    con = metodospool.dataSource.getConnection();
                     String sentence = "";
 
                     sentence = "UPDATE reportes SET Solucionado ='" + solucionado + "'WHERE ID =" + id;
@@ -827,7 +872,7 @@ public class Reportes extends javax.swing.JFrame {
                     PreparedStatement pst = null;
                     int rs = 0;
 
-                    pst = con.prepareStatement(sentence);
+                    pst = c.prepareStatement(sentence);
                     rs = pst.executeUpdate();
 
                     JOptionPane.showMessageDialog(this, "Actualizacion realizada con exito!");
@@ -846,7 +891,7 @@ public class Reportes extends javax.swing.JFrame {
 
     private void jButtonActActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonActActionPerformed
         // TODO add your handling code here:
-        Mostrar();
+        Mostrar(0);
     }//GEN-LAST:event_jButtonActActionPerformed
 
 
@@ -862,30 +907,15 @@ public class Reportes extends javax.swing.JFrame {
     }//GEN-LAST:event_jTextFielfFiltroKeyReleased
 
     private void jDateChooser1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jDateChooser1MousePressed
-        // TODO add your handling code here:
-           
-        
-        String fecha;
-        java.util.Date date = new java.util.Date();
-        SimpleDateFormat f = new SimpleDateFormat("yyyy-MM-dd");
-
-        fecha = f.format(jDateChooser1.getDate());
-        
-        if (fecha.length() > 0) {
-            System.out.println(fecha);
-            sorter.setRowFilter(RowFilter.regexFilter(fecha, 9));
-        }
-        
+        // TODO add your handling code 
     }//GEN-LAST:event_jDateChooser1MousePressed
 
     private void jDateChooser1PropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_jDateChooser1PropertyChange
-        // TODO add your handling code here:
-        
-        
+
     }//GEN-LAST:event_jDateChooser1PropertyChange
 
     private void jButtonFiltrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonFiltrarActionPerformed
-        
+
         if (jCheckBoxAvanzado.isSelected()) {
             String labValue = jTextFieldLab.getText().trim();
             String alumnoValue = jTextFieldAlumno.getText().trim();
@@ -901,10 +931,16 @@ public class Reportes extends javax.swing.JFrame {
             SimpleDateFormat f = new SimpleDateFormat("yyyy-MM-dd");
 
             fecha = f.format(jDateChooser.getDate());
-            Mostrar();
-        }
+            Mostrar(0);
+        } else if (jComboBoxFast.getSelectedIndex() == 4) {
 
-            
+      
+            Mostrar(jComboBoxFast.getSelectedIndex());
+
+        }else if (jComboBoxFast.getSelectedIndex() == 6) {
+            Mostrar(jComboBoxFast.getSelectedIndex());
+
+        }
     }//GEN-LAST:event_jButtonFiltrarActionPerformed
 
     private void filtrar(int parameter) {
@@ -925,8 +961,8 @@ public class Reportes extends javax.swing.JFrame {
                     sorter.setRowFilter(RowFilter.regexFilter(jTextFielfFiltro.getText().trim().toUpperCase(), 3));
                     break;
                 case 5:
-                    JOptionPane.showMessageDialog(this, "entre");
-                    sorter.setRowFilter(RowFilter.regexFilter(jTextFielfFiltro.getText().trim(), 7));
+
+                    sorter.setRowFilter(RowFilter.regexFilter(jTextFielfFiltro.getText().trim().toUpperCase(), 7));
                     break;
                 case 0:
                     JOptionPane.showMessageDialog(this, "Seleccione una opcion de filtrado");

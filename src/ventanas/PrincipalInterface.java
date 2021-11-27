@@ -5,17 +5,14 @@
  */
 package ventanas;
 
-import com.mysql.jdbc.Connection;
 import java.awt.Image;
 import java.awt.Toolkit;
-
 
 /**
  *
  * @author Nico
  */
-public class PrincipalInterface extends javax.swing.JFrame {
-
+public class PrincipalInterface extends javax.swing.JFrame implements NewInterface {
 
     public PrincipalInterface() {
         initComponents();
@@ -25,14 +22,12 @@ public class PrincipalInterface extends javax.swing.JFrame {
         setSize(500, 320);
         setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/imagenes/administracion.png")));
     }
-    
-       @Override
+
+    @Override
     public Image getIconImage() {
         Image retValue = Toolkit.getDefaultToolkit().getImage(ClassLoader.getSystemResource("imagenes/icono_sinFondo2.png"));
         return retValue;
     }
-    
-   
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -82,7 +77,7 @@ public class PrincipalInterface extends javax.swing.JFrame {
         // TODO add your handling code here:
         Reportes ventanaInfoA = new Reportes();
         ventanaInfoA.setVisible(true);
-        
+
     }//GEN-LAST:event_buttonReportesActionPerformed
 
     /**
@@ -117,7 +112,7 @@ public class PrincipalInterface extends javax.swing.JFrame {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new PrincipalInterface().setVisible(true);
-                
+
             }
         });
     }
