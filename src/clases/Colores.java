@@ -20,7 +20,8 @@ public class Colores extends DefaultTableCellRenderer {
 
         super.getTableCellRendererComponent(table,value,Selected,hasFocus,row,col);
         
-        if(table.getValueAt(row, 10).toString().equals("Si")){
+        if(table.getValueAt(row, 10).toString().equals("Si") || table.getValueAt(row, 10).toString().equals("si")
+                || table.getValueAt(row, 10).toString().equals("sI") || table.getValueAt(row, 10).toString().equals("SI")){
           setBackground(new Color(168, 240, 161));
                      
         }else{
